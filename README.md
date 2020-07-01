@@ -70,4 +70,5 @@ export CUDA_VISIBLE_DEVICES=0
 (torch_env) [npovey@ka pytorch_unet]$ python unet_pytorch.py > output.txt
 ```
 
-
+MUST
+Create "test" folder manually. 
