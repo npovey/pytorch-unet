@@ -355,7 +355,7 @@ def train(model,ndct_train, ldct_train, ldct_vald, ndct_vald, device,PATH):
     print("training")
     model.train()
     start = time.time()
-    n_epochs = 1   # < ---- change to 100
+    n_epochs = 1   # < ---- change to 100 (or less) during the actual training
     batch_size = 4
     length = len(ndct_train)
     losses = []
