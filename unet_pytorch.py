@@ -44,35 +44,35 @@ def avg_psnr(model, X_vald, y_vald):
     avg_psnr = psnr_sum / len(X_vald)
     return avg_psnr
 
-# test 
-def test(model, ldct_test, ndct_test, device):
-    model.eval()
-    X_test = torch.from_numpy(ldct_test).view(len(ldct_test), 1, 512, 512)
-    y_test = torch.from_numpy(ndct_test).view(len(ndct_test), 1, 512, 512)
-    print("X_test.shape: ", X_test.shape)
-    print("y_test.shape: ", y_test.shape)
-    X_test, y_test = X_test.to(device), y_test.to(device)
+# # test 
+# def test(model, ldct_test, ndct_test, device):
+#     model.eval()
+#     X_test = torch.from_numpy(ldct_test).view(len(ldct_test), 1, 512, 512)
+#     y_test = torch.from_numpy(ndct_test).view(len(ndct_test), 1, 512, 512)
+#     print("X_test.shape: ", X_test.shape)
+#     print("y_test.shape: ", y_test.shape)
+#     X_test, y_test = X_test.to(device), y_test.to(device)
 
-    num_batches = int(len(ndct_test)/6)                                                                                                                       
-    denoised_image = torch.empty(len(ndct_test),1,512, 512, dtype=torch.float)
-    with torch.no_grad():
-        for idx in range(num_batches):
-            model.zero_grad()
-            denoised_image[idx*6:(idx+1)*6,:,:,:]= model(X_test[idx*6:(idx+1)*6,:,:,:])
-    psnr_sum = 0
-    for i in range(len(X_test)):
-        psnr = cal_psnr(y_test[i,:,:,:].cpu().data.numpy(), denoised_image[i,:,:,:].cpu().data.numpy())
-        print("image: ",i ,"PSNR: " , psnr)  
-        psnr_sum += psnr
-    avg_psnr = psnr_sum / len(X_test)
-    print("Avg PSNR: ",avg_psnr)
-    return avg_psnr
-    # save images as .flt files                                                                                                                         
-    #save_dir = "/home/npovey/data/pytorch_models/test"
-    #rawfiles = [open(os.path.join(save_dir, "test_{num:08d}.flt".format(num=index)), 'wb') for index in range (354)]
-    #for index in range(len(ndct_test)):
-    #    img = np.asarray(denoised_image[index,:,:,:])
-    #    img.tofile(rawfiles[index])
+#     num_batches = int(len(ndct_test)/6)                                                                                                                       
+#     denoised_image = torch.empty(len(ndct_test),1,512, 512, dtype=torch.float)
+#     with torch.no_grad():
+#         for idx in range(num_batches):
+#             model.zero_grad()
+#             denoised_image[idx*6:(idx+1)*6,:,:,:]= model(X_test[idx*6:(idx+1)*6,:,:,:])
+#     psnr_sum = 0
+#     for i in range(len(X_test)):
+#         psnr = cal_psnr(y_test[i,:,:,:].cpu().data.numpy(), denoised_image[i,:,:,:].cpu().data.numpy())
+#         print("image: ",i ,"PSNR: " , psnr)  
+#         psnr_sum += psnr
+#     avg_psnr = psnr_sum / len(X_test)
+#     print("Avg PSNR: ",avg_psnr)
+#     return avg_psnr
+#     # save images as .flt files                                                                                                                         
+#     #save_dir = "/home/npovey/data/pytorch_models/test"
+#     #rawfiles = [open(os.path.join(save_dir, "test_{num:08d}.flt".format(num=index)), 'wb') for index in range (354)]
+#     #for index in range(len(ndct_test)):
+#     #    img = np.asarray(denoised_image[index,:,:,:])
+#     #    img.tofile(rawfiles[index])
 
 
 
