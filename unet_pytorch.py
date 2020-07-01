@@ -76,7 +76,7 @@ def test(model, ldct_test, ndct_test, device):
 
 
 
-# test                                                                                                                                                                 
+# test_save method denoises all test images and saves them in test folder                                                                                                                                                                                                                                        
 def test_save(model, ldct_test, ndct_test, device):
     model.eval()
     X_test = torch.from_numpy(ldct_test).view(len(ldct_test), 1, 512, 512)
@@ -101,6 +101,8 @@ def test_save(model, ldct_test, ndct_test, device):
 
     # save images as .flt files
     save_dir = "/home/npovey/data/pytorch_models/test"
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
     rawfiles = [open(os.path.join(save_dir, "test_{num:08d}.flt".format(num=index)), 'wb') for index in range (354)]
     for index in range(len(ndct_test)):
         img = np.asarray(denoised_image[index,:,:,:])
